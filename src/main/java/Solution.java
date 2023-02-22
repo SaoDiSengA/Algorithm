@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Solution {
 
     /***
@@ -41,5 +43,81 @@ public class Solution {
 
     }
 
+
+    /***
+     *剑指 Offer 03. 数组中重复的数字
+     *找出数组中重复的数字。
+     * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，
+     * 但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+     *
+     * 示例 1：
+     * 输入：
+     * [2, 3, 1, 0, 2, 5, 3]
+     * 输出：2 或 3
+     *
+     * @param nums
+     * @return
+     */
+    public int findRepeatNumber(int[] nums) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i],0) + 1);
+        }
+        for (int a : map.keySet()) {
+            if(map.get(a) > 1){
+                return a;
+            }
+        }
+        return 0;
+    }
+
+    /***
+     *
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     * 统计一个数字在排序数组中出现的次数。
+     * 示例 1:
+     * 输入: nums = [5,7,7,8,8,10], target = 8
+     * 输出: 2
+     * 示例2:
+     * 输入: nums = [5,7,7,8,8,10], target = 6
+     * 输出: 0
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i]==target){
+                total += 1;
+            }
+        }
+        return total;
+    }
+
+
+    /***
+     *
+     * 
+     * @param nums
+     * @return
+     */
+    public int missingNumber(int[] nums) {
+        int len = nums.length + 1;
+        for (int i = 0; i < len - 1; i++) {
+            if (nums[i] != i) {
+                return i;
+            }
+        }
+        return len - 1;
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[]{1,1,1};
+        Solution solution = new Solution();
+        int repeatNumber = solution.findRepeatNumber(a);
+        System.out.println(repeatNumber);
+    }
 
 }
