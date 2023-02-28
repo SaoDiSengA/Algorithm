@@ -1,4 +1,5 @@
-import java.util.HashMap;
+
+import java.util.*;
 
 public class Solution {
 
@@ -98,25 +99,240 @@ public class Solution {
 
 
     /***
+     *剑指 Offer 53 - II. 0～n-1中缺失的数字
+     * 一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
+     *示例 1:
      *
-     * 
+     * 输入: [0,1,3]
+     * 输出: 2
+     * 示例 2:
+     *
+     * 输入: [0,1,2,3,4,5,6,7,9]
+     * 输出: 8
      * @param nums
      * @return
      */
     public int missingNumber(int[] nums) {
-        int len = nums.length + 1;
+        int len = nums.length + 1; //避免越界
         for (int i = 0; i < len - 1; i++) {
             if (nums[i] != i) {
                 return i;
             }
         }
-        return len - 1;
+        return len - 1;  //返回len-1主要是避免当前数组没有消失的数
     }
 
+
+    /***
+     *
+     * 剑指 Offer 04. 二维数组中的查找
+     * 在一个 n * m 的二维数组中，每一行都按照从左到右非递减的顺序排序，每一列都按照从上到下非递减的顺序排序。
+     * 请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+     *  示例:
+     * 现有矩阵 matrix 如下：
+     * [
+     *   [1,   4,  7, 11, 15],
+     *   [2,   5,  8, 12, 19],
+     *   [3,   6,  9, 16, 22],
+     *   [10, 13, 14, 17, 24],
+     *   [18, 21, 23, 26, 30]
+     * ]
+     *
+     * 给定 target=5，返回true。
+     * 给定target=20，返回false。
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        int row = 0;
+        int col = matrix[0].length - 1;
+        while(row >= 0 && row < matrix.length && col >= 0 && col <= matrix[0].length){
+            if(target < matrix[row][col]){
+                col--;
+                continue;
+            }
+            if(target > matrix[row][col]){
+                row++;
+                continue;
+            }
+            if(target == matrix[row][col]){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+    /***
+     * 剑指 Offer 11. 旋转数组的最小数字
+     * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
+     *
+     * 给你一个可能存在重复元素值的数组numbers，它原来是一个升序排列的数组，并按上述情形进行了一次旋转。
+     * 请返回旋转数组的最小元素。例如，数组[3,4,5,1,2] 为 [1,2,3,4,5] 的一次旋转，该数组的最小值为 1。 
+     *
+     * 注意，数组 [a[0], a[1], a[2], ..., a[n-1]] 旋转一次 的结果为数组 [a[n-1], a[0], a[1], a[2], ..., a[n-2]]
+     * 示例 1：
+     *
+     * 输入：numbers = [3,4,5,1,2]
+     * 输出：1
+     * 示例 2：
+     *
+     * 输入：numbers = [2,2,2,0,1]
+     * 输出：0
+     * @param numbers
+     * @return
+     */
+    public int minArray(int[] numbers) {
+        if (numbers.length == 1) return numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            if(numbers[i] < numbers[i-1]){
+                return numbers[i];
+            }
+        }
+        //没有找到转折点，数组为升序
+        return numbers[0];
+
+//        int low = 0;
+//        int high = numbers.length - 1;
+//        while (low < high) {
+//            int pivot = low + (high - low) / 2;
+//            if (numbers[pivot] < numbers[high]) {
+//                high = pivot;
+//            } else if (numbers[pivot] > numbers[high]) {
+//                low = pivot + 1;
+//            } else {
+//                high -= 1;            因为有重复的数，所以相等的情况不能简单的判断该左还是该右，所以high--
+//            }
+//        }
+//        return numbers[low];
+    }
+
+
+    /***
+     *
+     * 剑指 Offer 50. 第一个只出现一次的字符
+     * 示例 1:
+     * 输入：s = "abaccdeff"
+     * 输出：'b'
+     * 示例 2:
+     * 输入：s = ""
+     * 输出：' '
+     *
+     * @param s
+     * @return
+     */
+    public char firstUniqChar(String s) {
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(char c : s.toCharArray()){
+            map.put(c,map.getOrDefault(c,0) + 1);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            int integer = map.get(s.charAt(i));
+            if (integer==1) return s.charAt(i);
+        }
+        return ' ';
+    }
+
+
+    /***
+     * 剑指 Offer 32 - II. 从上到下打印二叉树 II
+     * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+     * 例如:
+     * 给定二叉树: [3,9,20,null,null,15,7],
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回其层次遍历结果：
+     *
+     * [
+     *   [3],
+     *   [9,20],
+     *   [15,7]
+     * ]
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+
+        if(root==null) return res;
+
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+
+        queue.offer(root);
+
+        while(!queue.isEmpty()){
+            List<Integer> level = new ArrayList<Integer>();
+            int currentLevelSize = queue.size();
+            for (int i = 0; i < currentLevelSize; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+            res.add(level);
+        }
+
+
+        return res;
+    }
+
+
+    /***
+     * 剑指 Offer 32 - I. 从上到下打印二叉树
+     * 从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
+     * 例如:
+     * 给定二叉树:[3,9,20,null,null,15,7],
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回：
+     *
+     * [3,9,20,15,7]
+     *
+     *
+     * @param root
+     * @return
+     */
+    public int[] levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+//        int[] level = new int[]
+        List<Integer> res = new ArrayList<>();
+        if (root==null) return new int[]{};
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            TreeNode currentTreeNode = queue.poll();
+            res.add(currentTreeNode.val);
+            if(currentTreeNode.left!=null) queue.offer(currentTreeNode.left);
+            if(currentTreeNode.right!=null) queue.offer(currentTreeNode.right);
+        }
+        int[] a = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            a[i] = res.get(i);
+        }
+        return a;
+    }
+
+
     public static void main(String[] args) {
-        int[] a = new int[]{1,1,1};
+        int[][] a = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
         Solution solution = new Solution();
-        int repeatNumber = solution.findRepeatNumber(a);
+        boolean repeatNumber = solution.findNumberIn2DArray(a,20);
         System.out.println(repeatNumber);
     }
 
