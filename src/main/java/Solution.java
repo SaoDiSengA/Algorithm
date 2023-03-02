@@ -241,7 +241,7 @@ public class Solution {
      * 剑指 Offer 32 - II. 从上到下打印二叉树 II
      * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
      * 例如:
-     * 给定二叉树: [3,9,20,null,null,15,7],
+     * 给定二叉树:[3,9,20,null,null,15,7],
      *
      *     3
      *    / \
@@ -326,6 +326,114 @@ public class Solution {
             a[i] = res.get(i);
         }
         return a;
+    }
+
+
+    /***
+     * 剑指 Offer 32 - III. 从上到下打印二叉树 III
+     * 请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印
+     * 第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。
+     *
+     * 例如:
+     * 给定二叉树:[3,9,20,null,null,15,7],
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回其层次遍历结果：
+     *
+     * [
+     *   [3],
+     *   [20,9],
+     *   [15,7]
+     * ]
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        if(root==null) return ans;
+
+        Queue<TreeNode> nodeQueue = new LinkedList<>();  // 双端队列
+
+        nodeQueue.offer(root);
+
+        boolean isOrderLeft = true;
+
+        while(!nodeQueue.isEmpty()){
+            Deque<Integer> level = new LinkedList<>(); // 双端队列
+            int currentLevelSize = nodeQueue.size();
+            for (int i = 0; i < currentLevelSize; i++) {
+                TreeNode curNode = nodeQueue.poll();
+                if (isOrderLeft){
+                    level.offerLast(curNode.val);
+                } else {
+                    level.offerFirst(curNode.val);
+                }
+                if (curNode.left != null) {
+                    nodeQueue.offer(curNode.left);
+                }
+                if (curNode.right != null) {
+                    nodeQueue.offer(curNode.right);
+                }
+            }
+            ans.add(new ArrayList<>(level));
+            isOrderLeft = !isOrderLeft;
+        }
+        return ans;
+    }
+
+
+    /***
+     * 剑指 Offer 26. 树的子结构
+     * 输入两棵二叉树A和B，判断B是不是A的子结构。(约定空树不是任意一个树的子结构)
+     * B是A的子结构， 即 A中有出现和B相同的结构和节点值。
+     *
+     * 例如:
+     * 给定的树 A:
+     *
+     *   3
+     *   / \
+     *  4   5
+     * / \
+     * 1  2
+     * 给定的树 B：
+     *
+     *  4
+     *  /
+     * 1
+     * 返回 true，因为 B 与 A 的一个子树拥有相同的结构和节点值。
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+
+        if(A == null || B == null){
+            return false;
+        }
+
+        return recur(A,B) || isSubStructure(A.left,B) || isSubStructure(A.right,B);
+    }
+    private boolean recur(TreeNode A, TreeNode B) {
+        // 若B走完了,说明查找完毕,B为A的子结构
+        if(B == null) {
+            return true;
+        }
+        // 若B不为空并且A为空或者A与B的值不相等,直接可以判断B不是A的子结构
+        if(A == null || A.val != B.val) {
+            return false;
+        }
+        // 当A与B当前节点值相等,若要判断B为A的子结构
+        // 还需要判断B的左子树是否为A左子树的子结构 && B的右子树是否为A右子树的子结构
+        // 若两者都满足就说明B是A的子结构,并且该子结构以A根节点为起点
+        return recur(A.left, B.left) && recur(A.right, B.right);
     }
 
 
