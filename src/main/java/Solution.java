@@ -437,6 +437,42 @@ public class Solution {
     }
 
 
+    /***
+     * 剑指 Offer 27. 二叉树的镜像
+     * 请完成一个函数，输入一个二叉树，该函数输出它的镜像。
+     * 例如输入：
+     *
+     *   4
+     *  /  \
+     *  2   7
+     * / \  / \
+     * 1  3 6  9
+     * 镜像输出：
+     *
+     *   4
+     *  /  \
+     *  7   2
+     * / \  / \
+     * 9  6 3 1
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode mirrorTree(TreeNode root) {
+        if (root == null) return null;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if(node.right != null) stack.add(node.right);
+            if(node.left != null) stack.add(node.left);
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+        }
+        return root;
+    }
+
     public static void main(String[] args) {
         int[][] a = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
         Solution solution = new Solution();
