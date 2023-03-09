@@ -28,9 +28,9 @@ public class Solution {
         StringBuilder temp = new StringBuilder();
 
         for (int i = 0; i < s.length(); i++) {
-            if(i < n){
+            if (i < n) {
                 temp.append(s.charAt(i));
-            }else{
+            } else {
                 res.append(s.charAt(i));
             }
         }
@@ -60,12 +60,12 @@ public class Solution {
      * @return
      */
     public int findRepeatNumber(int[] nums) {
-        HashMap<Integer,Integer> map = new HashMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], map.getOrDefault(nums[i],0) + 1);
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         }
         for (int a : map.keySet()) {
-            if(map.get(a) > 1){
+            if (map.get(a) > 1) {
                 return a;
             }
         }
@@ -90,7 +90,7 @@ public class Solution {
     public int search(int[] nums, int target) {
         int total = 0;
         for (int i = 0; i < nums.length; i++) {
-            if(nums[i]==target){
+            if (nums[i] == target) {
                 total += 1;
             }
         }
@@ -148,16 +148,16 @@ public class Solution {
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
         int row = 0;
         int col = matrix[0].length - 1;
-        while(row >= 0 && row < matrix.length && col >= 0 && col <= matrix[0].length){
-            if(target < matrix[row][col]){
+        while (row >= 0 && row < matrix.length && col >= 0 && col <= matrix[0].length) {
+            if (target < matrix[row][col]) {
                 col--;
                 continue;
             }
-            if(target > matrix[row][col]){
+            if (target > matrix[row][col]) {
                 row++;
                 continue;
             }
-            if(target == matrix[row][col]){
+            if (target == matrix[row][col]) {
                 return true;
             }
 
@@ -188,7 +188,7 @@ public class Solution {
     public int minArray(int[] numbers) {
         if (numbers.length == 1) return numbers[0];
         for (int i = 1; i < numbers.length; i++) {
-            if(numbers[i] < numbers[i-1]){
+            if (numbers[i] < numbers[i - 1]) {
                 return numbers[i];
             }
         }
@@ -225,13 +225,13 @@ public class Solution {
      * @return
      */
     public char firstUniqChar(String s) {
-        HashMap<Character,Integer> map = new HashMap<>();
-        for(char c : s.toCharArray()){
-            map.put(c,map.getOrDefault(c,0) + 1);
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
         for (int i = 0; i < s.length(); i++) {
             int integer = map.get(s.charAt(i));
-            if (integer==1) return s.charAt(i);
+            if (integer == 1) return s.charAt(i);
         }
         return ' ';
     }
@@ -263,22 +263,22 @@ public class Solution {
 
         List<List<Integer>> res = new ArrayList<List<Integer>>();
 
-        if(root==null) return res;
+        if (root == null) return res;
 
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
 
         queue.offer(root);
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             List<Integer> level = new ArrayList<Integer>();
             int currentLevelSize = queue.size();
             for (int i = 0; i < currentLevelSize; i++) {
                 TreeNode node = queue.poll();
                 level.add(node.val);
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -309,17 +309,17 @@ public class Solution {
      * @param root
      * @return
      */
-    public int[] levelOrder(TreeNode root) {
+    public int[] levelOrder1(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
 //        int[] level = new int[]
         List<Integer> res = new ArrayList<>();
-        if (root==null) return new int[]{};
+        if (root == null) return new int[]{};
         queue.offer(root);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode currentTreeNode = queue.poll();
             res.add(currentTreeNode.val);
-            if(currentTreeNode.left!=null) queue.offer(currentTreeNode.left);
-            if(currentTreeNode.right!=null) queue.offer(currentTreeNode.right);
+            if (currentTreeNode.left != null) queue.offer(currentTreeNode.left);
+            if (currentTreeNode.right != null) queue.offer(currentTreeNode.right);
         }
         int[] a = new int[res.size()];
         for (int i = 0; i < res.size(); i++) {
@@ -353,11 +353,11 @@ public class Solution {
      * @param root
      * @return
      */
-    public List<List<Integer>> levelOrder(TreeNode root) {
+    public List<List<Integer>> levelOrder2(TreeNode root) {
 
         List<List<Integer>> ans = new ArrayList<>();
 
-        if(root==null) return ans;
+        if (root == null) return ans;
 
         Queue<TreeNode> nodeQueue = new LinkedList<>();  // 双端队列
 
@@ -365,12 +365,12 @@ public class Solution {
 
         boolean isOrderLeft = true;
 
-        while(!nodeQueue.isEmpty()){
+        while (!nodeQueue.isEmpty()) {
             Deque<Integer> level = new LinkedList<>(); // 双端队列
             int currentLevelSize = nodeQueue.size();
             for (int i = 0; i < currentLevelSize; i++) {
                 TreeNode curNode = nodeQueue.poll();
-                if (isOrderLeft){
+                if (isOrderLeft) {
                     level.offerLast(curNode.val);
                 } else {
                     level.offerFirst(curNode.val);
@@ -415,19 +415,20 @@ public class Solution {
      */
     public boolean isSubStructure(TreeNode A, TreeNode B) {
 
-        if(A == null || B == null){
+        if (A == null || B == null) {
             return false;
         }
 
-        return recur(A,B) || isSubStructure(A.left,B) || isSubStructure(A.right,B);
+        return recur(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
     }
+
     private boolean recur(TreeNode A, TreeNode B) {
         // 若B走完了,说明查找完毕,B为A的子结构
-        if(B == null) {
+        if (B == null) {
             return true;
         }
         // 若B不为空并且A为空或者A与B的值不相等,直接可以判断B不是A的子结构
-        if(A == null || A.val != B.val) {
+        if (A == null || A.val != B.val) {
             return false;
         }
         // 当A与B当前节点值相等,若要判断B为A的子结构
@@ -462,10 +463,10 @@ public class Solution {
         if (root == null) return null;
         Stack<TreeNode> stack = new Stack<>();
         stack.add(root);
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            if(node.right != null) stack.add(node.right);
-            if(node.left != null) stack.add(node.left);
+            if (node.right != null) stack.add(node.right);
+            if (node.left != null) stack.add(node.left);
             TreeNode temp = node.left;
             node.left = node.right;
             node.right = temp;
@@ -473,10 +474,135 @@ public class Solution {
         return root;
     }
 
+    /***
+     * 剑指 Offer 28. 对称的二叉树
+     * 请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。
+     * 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+     *
+     *     1
+     *    / \
+     *   2   2
+     *  / \ / \
+     * 3  4 4  3
+     *
+     * 但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+     *
+     *     1
+     *    / \
+     *   2   2
+     *    \   \
+     *    3    3
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        return check(root, root);
+    }
+
+    public boolean check(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        return p.val == q.val && check(p.left, q.right) && check(p.right, q.left);
+    }
+
+    /***
+     * 剑指 Offer 10- I. 斐波那契数列
+     * 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。斐波那契数列的定义如下：
+     * F(0) = 0,   F(1) = 1
+     * F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
+     * 斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
+     * 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
+     *
+     * 示例 1：
+     * 输入：n = 2
+     * 输出：1
+     *
+     * 示例 2：
+     * 输入：n = 5
+     * 输出：5
+     *
+     * @param n
+     * @return
+     *
+     */
+    public int fib(int n) {
+        if (n == 0) return 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+            dp[i] %= 1000000007;
+        }
+        return dp[n];
+    }
+
+
+    /***
+     * 剑指 Offer 10- II. 青蛙跳台阶问题
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+     *示例 1：
+     *
+     * 输入：n = 2
+     * 输出：2
+     * 示例 2：
+     *
+     * 输入：n = 7
+     * 输出：21
+     * 示例 3：
+     *
+     * 输入：n = 0
+     * 输出：1
+     * @param n
+     * @return
+     */
+    public int numWays(int n) {
+        if (n == 0) return 0;
+        int a = 1, b = 1, sum;
+        for (int i = 0; i < n; i++) {
+            sum = (a + b) % 1000000007;
+            a = b;
+            b = sum;
+        }
+        return a;
+    }
+
+
+    /***
+     * 剑指 Offer 63. 股票的最大利润
+     * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
+     * 示例 1:
+     *
+     * 输入: [7,1,5,3,6,4]
+     * 输出: 5
+     * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     *      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+     * 示例 2:
+     *
+     * 输入: [7,6,4,3,1]
+     * 输出: 0
+     * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+     *
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+
+        int max = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                int temp = prices[j] - prices[i];
+                if (temp > max) max = temp;
+            }
+        }
+        return max;
+
+    }
+
     public static void main(String[] args) {
-        int[][] a = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
         Solution solution = new Solution();
-        boolean repeatNumber = solution.findNumberIn2DArray(a,20);
+        boolean repeatNumber = solution.findNumberIn2DArray(a, 20);
         System.out.println(repeatNumber);
     }
 
