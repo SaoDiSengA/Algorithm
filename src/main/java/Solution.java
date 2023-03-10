@@ -598,11 +598,104 @@ public class Solution {
         return max;
 
     }
+    public int maxProfit1(int[] prices) {
+        int cost = Integer.MAX_VALUE;
+        int profit = 0;
+
+        for (int price : prices) {
+            cost = Math.min(cost,price);
+            profit = Math.max(profit,price - cost);
+        }
+        return profit;
+
+    }
+
+    /***
+     * 剑指 Offer 42. 连续子数组的最大和
+     * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。要求时间复杂度为O(n)。
+     * 示例1:
+     * 输入: nums = [-2,1,-3,4,-1,2,1,-5,4]
+     * 输出: 6
+     * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+     * @param nums
+     * @return
+     */
+    public int maxSubArray(int[] nums) {
+        int res = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += Math.max(nums[i-1],0);
+            res = Math.max(res,nums[i]);
+        }
+        return res;
+    }
+
+    /***
+     * 剑指 Offer 47. 礼物的最大价值
+     * 在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。
+     * 你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。
+     * 给定一个棋盘及其上面的礼物的价值，请计算你最多能拿到多少价值的礼物？
+     *示例 1:
+     *
+     * 输入:
+     * [
+     *  [1,3,1],
+     *  [1,5,1],
+     *  [4,2,1]
+     * ]
+     * 输出: 12
+     * 解释: 路径 1→3→5→2→1 可以拿到最多价值的礼物
+     *
+     *
+     * @param grid
+     * @return
+     */
+    public int maxValue(int[][] grid) {
+        int n = grid.length;;
+        int m = grid[0].length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if(i==0 && j ==0) continue;
+                if (i==0) grid[i][j] += grid[i][j-1];
+                else if (j==0) grid[i][j] += grid[i-1][j];
+                else grid[i][j] += Math.max(grid[i][j-1],grid[i-1][j]);
+            }
+        }
+        return grid[n-1][m-1];
+    }
+
+
+    /***
+     * 剑指 Offer 46. 把数字翻译成字符串
+     * 给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+     *
+     * 示例 1:
+     *
+     * 输入: 12258
+     * 输出: 5
+     * 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+     *
+     * @param num
+     * @return
+     */
+    public int translateNum(int num) {
+        String s = num + ""; //String s = String.valueOf(num);
+        int a = 1,b = 1;
+        for (int i = 2; i <= s.length() ; i++) {
+            String tmp = s.substring(i - 2,i); //最后一个不算，处理i-2 i-1
+            System.out.println(tmp);
+            int c = tmp.compareTo("10") >= 0 && tmp.compareTo("25") <= 0 ? a + b : a;
+            b = a;
+            a = c;
+        }
+        return a;
+    }
+
+
 
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
         Solution solution = new Solution();
-        boolean repeatNumber = solution.findNumberIn2DArray(a, 20);
+        int repeatNumber = solution.translateNum(18822);
         System.out.println(repeatNumber);
     }
 
