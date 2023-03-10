@@ -688,6 +688,23 @@ public class Solution {
             a = c;
         }
         return a;
+
+        /***
+         *     public int translateNum(int num) {
+         *         String s = num + "";
+         *         int[] dp = new int[s.length()];
+         *         if(s.length() < 2) return s.length();
+         *         dp[0] = 1;
+         *         for(int i = 1;i < s.length();i++){
+         *             int pre = Integer.parseInt(String.valueOf(s.charAt(i-1)));
+         *             int cur = Integer.parseInt(String.valueOf(s.charAt(i)));
+         *             if(pre == 1) dp[i] = dp[i-1] + 1;
+         *             else if(pre == 2 && cur <= 5) dp[i] = dp[i-1] + 1;
+         *             else dp[i] = dp[i-1];
+         *         }
+         *         return dp[s.length()-1];
+         *     }
+         */
     }
 
 
