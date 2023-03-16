@@ -741,7 +741,128 @@ public class Solution {
 
     }
 
+    /***
+     * 剑指 Offer 18. 删除链表的节点
+     * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+     * 返回删除后的链表的头节点。
+     * 示例 1:
+     * 输入: head = [4,5,1,9], val = 5
+     * 输出: [4,1,9]
+     * 解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+     * 示例 2:
+     * 输入: head = [4,5,1,9], val = 1
+     * 输出: [4,5,9]
+     * 解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+     *
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode deleteNode(ListNode head, int val) {
+        if (head.val == val) return head.next;
+        ListNode cur = head.next;
+        ListNode pre = head;
+        while(cur != null){
+            if (cur.val == val){
+                pre.next = cur.next;
+                return head;
+            }
+            pre = cur;
+            cur = cur.next;
+        }
+        return head;
+    }
 
+    /***
+     * 剑指 Offer 22. 链表中倒数第k个节点
+     *
+     * 输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。
+     * 例如，一个链表有 6 个节点，从头节点开始，它们的值依次是 1、2、3、4、5、6。这个链表的倒数第 3 个节点是值为 4 的节点。
+     *
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode getKthFromEnd(ListNode head, int k) {
+//        int size = 0;
+//        ListNode p = head;
+//        while(p != null){
+//            size++;
+//            p = p.next;
+//        }
+//        int temp = size - k;
+//        while(temp > 0){
+//            --temp;
+//            head = head.next;
+//        }
+//        return head;
+        ListNode p = head;
+        for (int i = 0; i < k; i++) {
+            p = p.next;
+        }
+        while(p != null){
+            p = p.next;
+            head = head.next;
+        }
+        return head;
+    }
+
+    /***
+     * 剑指 Offer 25. 合并两个排序的链表
+     * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
+     * 示例1：
+     *
+     * 输入：1->2->4, 1->3->4
+     * 输出：1->1->2->3->4->4
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        if (l1 == null) return l2;
+        ListNode nodeNew = new ListNode(0);
+        ListNode nodeNew_tail = nodeNew;
+        ListNode l1_cur = l1;
+        ListNode l2_cur = l2;
+        while(l1 != null && l2 != null){
+            if (l1_cur.val < l2_cur.val){
+                l1 = l1_cur.next;
+                nodeNew_tail.next = l1_cur;
+                l1_cur = l1;
+            }else{
+                l2 = l2_cur.next;
+                nodeNew_tail.next = l2_cur;
+                l2_cur = l2;
+            }
+            nodeNew_tail = nodeNew_tail.next;
+        }
+        if(l2 != null){
+            nodeNew_tail.next = l2;
+        }
+        if(l1 != null){
+            nodeNew_tail.next = l1;
+        }
+        return nodeNew.next;
+    }
+
+    /***
+     *
+     * 剑指 Offer 52. 两个链表的第一个公共节点
+     * 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3
+     * 输出：Reference of the node with value = 8
+     * 输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+
+
+    }
 
 
     public static void main(String[] args) {
