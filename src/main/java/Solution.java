@@ -860,7 +860,70 @@ public class Solution {
      */
     ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
+        Set<ListNode> set = new HashSet<>();
+        ListNode headA_tail = headA;
+        ListNode headB_tail = headB;
+        while(headA!=null && headB!=null){
+            headA_tail = headA_tail.next;
+            headB_tail = headB_tail.next;
+            if(!set.add(headA)) return headA;
+            if(!set.add(headB)) return headB;
+            headA = headA_tail;
+            headB = headB_tail;
+        }
+        while(headA!=null){
+            headA_tail = headA_tail.next;
+            if(!set.add(headA)) return headA;
+            headA = headA_tail;
+        }
+        while(headB!=null){
+            headB_tail = headB_tail.next;
+            if(!set.add(headB)) return headB;
+            headB = headB_tail;
+        }
+        return null;
+    }
 
+    /***
+     *
+     * @param nums
+     * @return
+     */
+    public int[] exchange(int[] nums) {
+//        int[] res = new int[nums.length];
+//        List<Integer> odd_list = new ArrayList<>();
+//        List<Integer> even_list = new ArrayList<>();
+//        for (int num : nums){
+//            if (num % 2 == 1) odd_list.add(num);
+//            if (num % 2 == 0) even_list.add(num);
+//        }
+//        for (int i = 0; i < odd_list.size(); i++) {
+//            res[i] = odd_list.get(i);
+//        }
+//        for (int i = odd_list.size(); i < res.length; i++) {
+//            res[i] = even_list.get(i- odd_list.size());
+//        }
+//        return res;
+        int i = 0;
+        int j = nums.length - 1;
+        int temp;
+        while(i < j){
+            while(i < j && (nums[i] & 1) == 1) i++;
+            while(i < j && (nums[j] & 1) == 0) j--;
+            temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+        return nums;
+    }
+
+    /***
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] nums, int target) {
 
     }
 
@@ -868,8 +931,8 @@ public class Solution {
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
         Solution solution = new Solution();
-        int repeatNumber = solution.lengthOfLongestSubstring("abcabcbb");
-        System.out.println(repeatNumber);
+        int[] repeatNumber = solution.exchange(new int[]{1,2,3,4});
+        System.out.println(Arrays.toString(repeatNumber));
     }
 
 }
