@@ -598,13 +598,14 @@ public class JianZhiOfferSolution {
         return max;
 
     }
+
     public int maxProfit1(int[] prices) {
         int cost = Integer.MAX_VALUE;
         int profit = 0;
 
         for (int price : prices) {
-            cost = Math.min(cost,price);
-            profit = Math.max(profit,price - cost);
+            cost = Math.min(cost, price);
+            profit = Math.max(profit, price - cost);
         }
         return profit;
 
@@ -623,8 +624,8 @@ public class JianZhiOfferSolution {
     public int maxSubArray(int[] nums) {
         int res = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            nums[i] += Math.max(nums[i-1],0);
-            res = Math.max(res,nums[i]);
+            nums[i] += Math.max(nums[i - 1], 0);
+            res = Math.max(res, nums[i]);
         }
         return res;
     }
@@ -650,17 +651,18 @@ public class JianZhiOfferSolution {
      * @return
      */
     public int maxValue(int[][] grid) {
-        int n = grid.length;;
+        int n = grid.length;
+        ;
         int m = grid[0].length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if(i==0 && j ==0) continue;
-                if (i==0) grid[i][j] += grid[i][j-1];
-                else if (j==0) grid[i][j] += grid[i-1][j];
-                else grid[i][j] += Math.max(grid[i][j-1],grid[i-1][j]);
+                if (i == 0 && j == 0) continue;
+                if (i == 0) grid[i][j] += grid[i][j - 1];
+                else if (j == 0) grid[i][j] += grid[i - 1][j];
+                else grid[i][j] += Math.max(grid[i][j - 1], grid[i - 1][j]);
             }
         }
-        return grid[n-1][m-1];
+        return grid[n - 1][m - 1];
     }
 
 
@@ -679,9 +681,9 @@ public class JianZhiOfferSolution {
      */
     public int translateNum(int num) {
         String s = num + ""; //String s = String.valueOf(num);
-        int a = 1,b = 1;
-        for (int i = 2; i <= s.length() ; i++) {
-            String tmp = s.substring(i - 2,i); //最后一个不算，处理i-2 i-1
+        int a = 1, b = 1;
+        for (int i = 2; i <= s.length(); i++) {
+            String tmp = s.substring(i - 2, i); //最后一个不算，处理i-2 i-1
             System.out.println(tmp);
             int c = tmp.compareTo("10") >= 0 && tmp.compareTo("25") <= 0 ? a + b : a;
             b = a;
@@ -729,13 +731,13 @@ public class JianZhiOfferSolution {
      */
     public int lengthOfLongestSubstring(String s) {
 
-        Map<Character,Integer> dic = new HashMap<>();
-        int res = 0,temp = 0;
-        for (int j = 0;j < s.length();j++){
-            int i = dic.getOrDefault(s.charAt(j),-1);
-            dic.put(s.charAt(j),j);
+        Map<Character, Integer> dic = new HashMap<>();
+        int res = 0, temp = 0;
+        for (int j = 0; j < s.length(); j++) {
+            int i = dic.getOrDefault(s.charAt(j), -1);
+            dic.put(s.charAt(j), j);
             temp = temp < j - i ? temp + 1 : j - i;
-            res = Math.max(res,temp);
+            res = Math.max(res, temp);
         }
         return res;
 
@@ -762,8 +764,8 @@ public class JianZhiOfferSolution {
         if (head.val == val) return head.next;
         ListNode cur = head.next;
         ListNode pre = head;
-        while(cur != null){
-            if (cur.val == val){
+        while (cur != null) {
+            if (cur.val == val) {
                 pre.next = cur.next;
                 return head;
             }
@@ -801,7 +803,7 @@ public class JianZhiOfferSolution {
         for (int i = 0; i < k; i++) {
             p = p.next;
         }
-        while(p != null){
+        while (p != null) {
             p = p.next;
             head = head.next;
         }
@@ -826,22 +828,22 @@ public class JianZhiOfferSolution {
         ListNode nodeNew_tail = nodeNew;
         ListNode l1_cur = l1;
         ListNode l2_cur = l2;
-        while(l1 != null && l2 != null){
-            if (l1_cur.val < l2_cur.val){
+        while (l1 != null && l2 != null) {
+            if (l1_cur.val < l2_cur.val) {
                 l1 = l1_cur.next;
                 nodeNew_tail.next = l1_cur;
                 l1_cur = l1;
-            }else{
+            } else {
                 l2 = l2_cur.next;
                 nodeNew_tail.next = l2_cur;
                 l2_cur = l2;
             }
             nodeNew_tail = nodeNew_tail.next;
         }
-        if(l2 != null){
+        if (l2 != null) {
             nodeNew_tail.next = l2;
         }
-        if(l1 != null){
+        if (l1 != null) {
             nodeNew_tail.next = l1;
         }
         return nodeNew.next;
@@ -863,22 +865,22 @@ public class JianZhiOfferSolution {
         Set<ListNode> set = new HashSet<>();
         ListNode headA_tail = headA;
         ListNode headB_tail = headB;
-        while(headA!=null && headB!=null){
+        while (headA != null && headB != null) {
             headA_tail = headA_tail.next;
             headB_tail = headB_tail.next;
-            if(!set.add(headA)) return headA;
-            if(!set.add(headB)) return headB;
+            if (!set.add(headA)) return headA;
+            if (!set.add(headB)) return headB;
             headA = headA_tail;
             headB = headB_tail;
         }
-        while(headA!=null){
+        while (headA != null) {
             headA_tail = headA_tail.next;
-            if(!set.add(headA)) return headA;
+            if (!set.add(headA)) return headA;
             headA = headA_tail;
         }
-        while(headB!=null){
+        while (headB != null) {
             headB_tail = headB_tail.next;
-            if(!set.add(headB)) return headB;
+            if (!set.add(headB)) return headB;
             headB = headB_tail;
         }
         return null;
@@ -907,9 +909,9 @@ public class JianZhiOfferSolution {
         int i = 0;
         int j = nums.length - 1;
         int temp;
-        while(i < j){
-            while(i < j && (nums[i] & 1) == 1) i++;
-            while(i < j && (nums[j] & 1) == 0) j--;
+        while (i < j) {
+            while (i < j && (nums[i] & 1) == 1) i++;
+            while (i < j && (nums[j] & 1) == 0) j--;
             temp = nums[i];
             nums[i] = nums[j];
             nums[j] = temp;
@@ -952,11 +954,11 @@ public class JianZhiOfferSolution {
 //        return res;
         int i = 0;
         int j = nums.length - 1;
-        while(i < j){
+        while (i < j) {
             int s = nums[i] + nums[j];
             if (s < target) i++;
             else if (s > target) j--;
-            else return new int[]{nums[i],nums[j]};
+            else return new int[]{nums[i], nums[j]};
         }
         return new int[0];
     }
@@ -988,10 +990,10 @@ public class JianZhiOfferSolution {
         s = s.trim();
         int i = s.length() - 1;
         int j = i;
-        while(i >= 0){
-            while(i >= 0 && s.charAt(i) != ' ') i--;
-            sb.append(s.substring(i+1,j+1) + " ");
-            while(i >= 0 && s.charAt(i) == ' ') i--;
+        while (i >= 0) {
+            while (i >= 0 && s.charAt(i) != ' ') i--;
+            sb.append(s.substring(i + 1, j + 1) + " ");
+            while (i >= 0 && s.charAt(i) == ' ') i--;
             j = i;
         }
         return sb.toString().trim();
@@ -1016,24 +1018,25 @@ public class JianZhiOfferSolution {
         char[] words = word.toCharArray();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (dfs(board,words,i,j,0)) return true;
+                if (dfs(board, words, i, j, 0)) return true;
             }
         }
         return false;
     }
+
     private boolean dfs(char[][] board, char[] words, int i, int j, int k) {
-        if(i >= board.length || i < 0 || j >= board[0].length || j < 0 || board[i][j] != words[k]) return false;
-        if(k == words.length - 1) return true;
+        if (i >= board.length || i < 0 || j >= board[0].length || j < 0 || board[i][j] != words[k]) return false;
+        if (k == words.length - 1) return true;
         board[i][j] = '\0';
-        boolean res = dfs(board,words,i+1,j,k+1) || dfs(board,words,i,j+1,k+1) ||
-                      dfs(board,words,i-1,j,k+1) || dfs(board,words,i,j-1,k+1);
+        boolean res = dfs(board, words, i + 1, j, k + 1) || dfs(board, words, i, j + 1, k + 1) ||
+                dfs(board, words, i - 1, j, k + 1) || dfs(board, words, i, j - 1, k + 1);
         board[i][j] = words[k];
         return res;
     }
 
 
     /***
-     * @Description: 
+     * @Description:
      * @param: [m, n, k]
      * @return: int
      * @Author: SaoDiSeng
@@ -1043,16 +1046,18 @@ public class JianZhiOfferSolution {
         boolean[][] visited = new boolean[m][n];
         int i = 0;
         int j = 0;
-        return dfs(i,j,sums(i),sums(j),m,n,k,visited);
+        return dfs(i, j, sums(i), sums(j), m, n, k, visited);
     }
+
     private int dfs(int i, int j, int si, int sj, int m, int n, int k, boolean[][] visited) {
         if (i >= m || j >= n || k < si + sj || visited[i][j]) return 0;
         visited[i][j] = true;
-        return 1 + dfs(i + 1, j, sums(i+1), sums(j),m,n,k,visited) + dfs(i, j + 1, sums(i), sums(j+1),m,n,k,visited);
+        return 1 + dfs(i + 1, j, sums(i + 1), sums(j), m, n, k, visited) + dfs(i, j + 1, sums(i), sums(j + 1), m, n, k, visited);
     }
-    int sums(int x){
+
+    int sums(int x) {
         int s = 0;
-        while(x != 0) {
+        while (x != 0) {
             s += x % 10;
             x = x / 10;
         }
@@ -1060,15 +1065,47 @@ public class JianZhiOfferSolution {
     }
 
 
+    /***
+     * @Description: 剑指 Offer 34. 二叉树中和为某一值的路径
+     * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+     * 叶子节点 是指没有子节点的节点。
+     * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+     * 输出：[[5,4,11,2],[5,8,4,5]]
+     * 输入：root = [1,2,3], targetSum = 5
+     * 输出：[]
+     * 输入：root = [1,2], targetSum = 0
+     * 输出：[]
+     * @param: [root, target]
+     * @return: java.util.List<java.util.List < java.lang.Integer>>
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-79 20:02:50
+     */
+    LinkedList<List<Integer>> resList = new LinkedList<>();
+    LinkedList<Integer> list = new LinkedList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int target) {
+        recur(root, target);
+        return resList;
+    }
+    void recur(TreeNode root, int target) {
+        if (root == null) return;
+        list.add(root.val);
+        target -= root.val;
+        if(target == 0 && root.left == null && root.right == null)
+            resList.add(new LinkedList<>(list));
+        recur(root.left,target);
+        recur(root.right,target);
+        list.removeLast();
+    }
+
 
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
         JianZhiOfferSolution jianZhiOfferSolution = new JianZhiOfferSolution();
-        int[] repeatNumber = jianZhiOfferSolution.exchange(new int[]{1,2,3,4});
+        int[] repeatNumber = jianZhiOfferSolution.exchange(new int[]{1, 2, 3, 4});
         System.out.println(Arrays.toString(repeatNumber));
         String s = "    ni  ni ni ";
         String s1 = jianZhiOfferSolution.reverseWords(s);
-        int count = jianZhiOfferSolution.movingCount(11,8,16);
+        int count = jianZhiOfferSolution.movingCount(11, 8, 16);
         System.out.println(count);
     }
 
