@@ -1032,9 +1032,33 @@ public class Solution {
     }
 
 
+    /***
+     * @Description: 
+     * @param: [m, n, k]
+     * @return: int
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-79 10:21:25
+     */
     public int movingCount(int m, int n, int k) {
-
+        boolean[][] visited = new boolean[m][n];
+        int i = 0;
+        int j = 0;
+        return dfs(i,j,sums(i),sums(j),m,n,k,visited);
     }
+    private int dfs(int i, int j, int si, int sj, int m, int n, int k, boolean[][] visited) {
+        if (i >= m || j >= n || k < si + sj || visited[i][j]) return 0;
+        visited[i][j] = true;
+        return 1 + dfs(i + 1, j, sums(i+1), sums(j),m,n,k,visited) + dfs(i, j + 1, sums(i), sums(j+1),m,n,k,visited);
+    }
+    int sums(int x){
+        int s = 0;
+        while(x != 0) {
+            s += x % 10;
+            x = x / 10;
+        }
+        return s;
+    }
+
 
 
     public static void main(String[] args) {
@@ -1044,7 +1068,8 @@ public class Solution {
         System.out.println(Arrays.toString(repeatNumber));
         String s = "    ni  ni ni ";
         String s1 = solution.reverseWords(s);
-        System.out.println(s1);
+        int count = solution.movingCount(11,8,16);
+        System.out.println(count);
     }
 
 }
