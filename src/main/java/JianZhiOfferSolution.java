@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class Solution {
+public class JianZhiOfferSolution {
 
     /***
      * 剑指 Offer 58 - II. 左旋转字符串
@@ -1063,12 +1063,12 @@ public class Solution {
 
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
-        Solution solution = new Solution();
-        int[] repeatNumber = solution.exchange(new int[]{1,2,3,4});
+        JianZhiOfferSolution jianZhiOfferSolution = new JianZhiOfferSolution();
+        int[] repeatNumber = jianZhiOfferSolution.exchange(new int[]{1,2,3,4});
         System.out.println(Arrays.toString(repeatNumber));
         String s = "    ni  ni ni ";
-        String s1 = solution.reverseWords(s);
-        int count = solution.movingCount(11,8,16);
+        String s1 = jianZhiOfferSolution.reverseWords(s);
+        int count = jianZhiOfferSolution.movingCount(11,8,16);
         System.out.println(count);
     }
 
