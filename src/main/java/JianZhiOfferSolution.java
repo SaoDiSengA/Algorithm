@@ -1184,6 +1184,78 @@ public class JianZhiOfferSolution {
 //    }
 
 
+    /***
+     * @Description: 面试题45. 把数组排成最小的数
+     * 输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+     * 输入: [10,2]
+     * 输出: "102"
+     * 输入: [3,30,34,5,9]
+     * 输出: "3033459"
+     * @param: [nums]
+     * @return: java.lang.String
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-80 17:31:55
+     */
+//    List<Integer> minNumberList = new ArrayList<>();
+//    public String minNumber(int[] nums) {
+//        for (int i = 0; i < nums.length; i++) {
+//            sum(nums[i]);
+//        }
+//        Collections.sort(minNumberList);
+//        String s = minNumberList.toString();
+//        System.out.println(s);
+//        s = s.replace(",","");
+//        s = s.replace(" ","");
+//        s = s.replace("[","");
+//        s = s.replace("]","");
+//        int m = 0;
+//        for (int i = 0; i < s.length(); i++) {
+//            if(s.charAt(i)=='0'){
+//                m++;
+//            }else break;
+//        }
+//        String s1 = s.substring(0,m);
+//        String s2 = s.substring(m,s.length());
+//        return s2.substring(0,1)+s1+s2.substring(1,s2.length());
+//    }
+//    void sum(int x){
+//        while(x != 0){
+//            minNumberList.add(x % 10);
+//            x = x / 10;
+//        }
+//    }
+    public String minNumber(int[] nums) {
+        String[] strs = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            strs[i] = String.valueOf(nums[i]);
+        }
+        quickSort(strs,0, strs.length-1);
+        StringBuilder res = new StringBuilder();
+        for(String s : strs) res.append(s);
+        return res.toString();
+    }
+    void quickSort(String[] strs,int low,int high) {
+        if (low > high) return;
+        int left = low;
+        int right = high;
+        String pivot = strs[low];
+        String temp = "";
+        while (left < right) {
+            while (left < right && (strs[right] + pivot).compareTo(pivot + strs[right]) >= 0) right--;
+            while (left < right && (strs[left] + pivot).compareTo(pivot + strs[left]) <= 0) left++;
+            if (left <= right) {
+                temp = strs[left];
+                strs[left] = strs[right];
+                strs[right] = temp;
+            }
+        }
+        strs[low] = strs[left];
+        strs[left] = pivot;
+        quickSort(strs, low, left - 1);
+        quickSort(strs, left + 1, high);
+    }
+
+
 
 
     public static void main(String[] args) {
@@ -1195,6 +1267,8 @@ public class JianZhiOfferSolution {
         String s1 = jianZhiOfferSolution.reverseWords(s);
         int count = jianZhiOfferSolution.movingCount(11, 8, 16);
         System.out.println(count);
+        String s2 = jianZhiOfferSolution.minNumber(new int[]{3,30,34,5,9,3});
+        System.out.println(s2);
     }
 
 }
