@@ -1082,20 +1082,108 @@ public class JianZhiOfferSolution {
      */
     LinkedList<List<Integer>> resList = new LinkedList<>();
     LinkedList<Integer> list = new LinkedList<>();
+
     public List<List<Integer>> pathSum(TreeNode root, int target) {
         recur(root, target);
         return resList;
     }
+
     void recur(TreeNode root, int target) {
         if (root == null) return;
         list.add(root.val);
         target -= root.val;
-        if(target == 0 && root.left == null && root.right == null)
+        if (target == 0 && root.left == null && root.right == null)
             resList.add(new LinkedList<>(list));
-        recur(root.left,target);
-        recur(root.right,target);
+        recur(root.left, target);
+        recur(root.right, target);
         list.removeLast();
     }
+
+    static class Node {
+        public int val;
+        public Node left;
+        public Node right;
+
+        public Node() {
+        }
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right) {
+            val = _val;
+            left = _left;
+            right = _right;
+        }
+    }
+
+    /***
+     * @Description: 剑指 Offer 36. 二叉搜索树与双向链表
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
+     * 为了让您更好地理解问题，以下面的二叉搜索树为例：
+     * 我们希望将这个二叉搜索树转化为双向循环链表。链表中的每个节点都有一个前驱和后继指针。对于双向循环链表，第一个节点的前驱是最后一个节点，最后一个节点的后继是第一个节点。
+     * 下图展示了上面的二叉搜索树转化成的链表。“head” 表示指向链表中有最小元素的节点。
+     * @param: [root]
+     * @return: JianZhiOfferSolution.Node
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-79 21:29:00
+     */
+    Node pre, head;
+
+    public Node treeToDoublyList(Node root) {
+        if (root == null) return null;
+        recur(root);
+        head.left = pre;
+        pre.right = head;
+        return head;
+    }
+
+    private void recur(Node root) {
+        if (root == null) return;
+        recur(root.left);
+        if (pre != null) pre.right = root;
+        else head = root;
+        root.left = pre;
+        pre = root;
+        recur(root.right);
+    }
+
+    /***
+     * @Description: 剑指 Offer 54. 二叉搜索树的第k大节点
+     * 给定一棵二叉搜索树，请找出其中第 k 大的节点的值。
+     * @param: [root, k]
+     * @return: int
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-79 21:54:20
+     */
+    int res,k;
+    public int kthLargest(TreeNode root, int k) {
+        this.k = k;
+        dfs(root);
+        return res;
+    }
+    private void dfs(TreeNode root) {
+        if (root == null) return;
+        dfs(root.right);
+        if(k == 0) return;
+        if(--k == 0) res = root.val;
+        dfs(root.left);
+    }
+//    public int kthLargest(TreeNode root, int k) {
+//        List<Integer> list = new ArrayList<>();
+//        dfs(root);
+//        return list.get(list.size() - k);
+//    }
+//
+//    private void dfs(TreeNode root) {
+//        if (root == null) return;
+//        dfs(root.left);
+//        list.add(root.val);
+//        dfs(root.right);
+//    }
+
+
 
 
     public static void main(String[] args) {
