@@ -1345,6 +1345,29 @@ public class JianZhiOfferSolution {
     }
 
 
+    /***
+     * @Description:
+     * @param: [temperatures]
+     * @return: int[]
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-86 11:14:54
+     */
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack<Integer> stack = new Stack<>();
+        int[] res = new int[temperatures.length];
+        for(int i = 0;i < temperatures.length;i++){
+            while(!stack.isEmpty() && temperatures[i] > stack.peek()){
+                res[stack.peek()] = i - stack.pop();
+            }
+            stack.push(i);
+        }
+        while(!stack.isEmpty()){
+            res[stack.pop()] = 0;
+        }
+        return res;
+    }
+
+
 
 
     public static void main(String[] args) {
@@ -1373,6 +1396,9 @@ public class JianZhiOfferSolution {
         mystring = String.valueOf(mychar);
         System.out.println(mystring);
 
+
+        int[] ints = jianZhiOfferSolution.dailyTemperatures(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
+        System.out.println(ints);
 
     }
 
