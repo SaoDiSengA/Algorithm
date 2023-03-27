@@ -1297,6 +1297,53 @@ public class JianZhiOfferSolution {
         return res;
     }
 
+    /***
+     * @Description:
+     * @param: [head, left, right]
+     * @return: ListNode
+     * @Author: SaoDiSeng
+     * @Date: 2023-03-82 19:47:15
+     */
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode head1 = new ListNode(0);
+        head1.next = head;
+        head = head1;
+        ListNode pre = head;
+        ListNode tail = head;
+        ListNode a = head;
+        ListNode b = head;
+        ListNode cur = head.next;
+        while(cur != null){
+            if(cur.val == left){
+                while(pre.next != cur){
+                    pre = pre.next;
+                }
+                a = cur; //进行头插法
+                b = cur;
+            }
+            if(cur.val == right){
+                tail = cur.next;
+                cur.next = null;
+            }
+            cur = cur.next;
+        }
+        ListNode newHead = new ListNode(0);
+        newHead.next = null;
+        while(a != null){ //头插
+            a = a.next;
+            b.next = newHead.next;
+            newHead.next = b;
+            b = a;
+        }
+        b = newHead;
+        while(b.next!=null){
+            b = b.next;
+        }
+        pre.next = newHead.next;
+        b.next = tail;
+        return head.next;
+    }
+
 
 
 
@@ -1313,7 +1360,20 @@ public class JianZhiOfferSolution {
         System.out.println(s2);
         int i = jianZhiOfferSolution.bestTeamScore(new int[]{1, 3, 5, 10, 15}, new int[]{1, 2, 3, 4, 5});
         Map<Integer,Integer> map = new HashMap<>();
-        map.getOrDefault(map.get(),0) +1
+        ListNode head = new ListNode(3);
+        head.next = new ListNode(5);
+        int left = 1;
+        int right = 1;
+        ListNode listNode = jianZhiOfferSolution.reverseBetween(head, left, right);
+
+
+        char mychar = 'g';
+        String mystring = Character.toString(mychar);
+        System.out.println(mystring);
+        mystring = String.valueOf(mychar);
+        System.out.println(mystring);
+
+
     }
 
 }
