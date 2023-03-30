@@ -1400,6 +1400,9 @@ public class JianZhiOfferSolution {
         int[] ints = jianZhiOfferSolution.dailyTemperatures(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
         System.out.println(ints);
 
+
+        ArrayDeque
+
     }
 
 }
