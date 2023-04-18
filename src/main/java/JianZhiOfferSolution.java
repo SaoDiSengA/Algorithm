@@ -1369,6 +1369,38 @@ public class JianZhiOfferSolution {
 
 
 
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[n-1] = 0;
+        for(int i = n - 2;i >= 0;i--){
+            if(nums[i] > nums[i+1]){
+                dp[i] = dp[i+1] + 1;
+            }else dp[i] = dp[i+1];
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(dp[i]);
+        }
+        return list;
+    }
+
+    public int findDuplicate(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        int ans = 0;
+        for(int i = 0;i < nums.length;i++){
+            map.put(nums[i],map.getOrDefault(map.get(nums[i]),0)+1);
+            System.out.println(map.get(nums[i]));
+            if(map.get(nums[i]) >= 2) {
+                ans = nums[i];
+                break;
+            }
+        }
+        return ans;
+    }
+
+
+
 
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
@@ -1399,9 +1431,12 @@ public class JianZhiOfferSolution {
 
         int[] ints = jianZhiOfferSolution.dailyTemperatures(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
         System.out.println(ints);
+        ArrayList<Integer> list = new ArrayList<>();
+        list.trimToSize();
 
 
-        ArrayDeque
+        int duplicate = jianZhiOfferSolution.findDuplicate(new int[]{2, 1, 1});
+        System.out.println(duplicate);
 
     }
 

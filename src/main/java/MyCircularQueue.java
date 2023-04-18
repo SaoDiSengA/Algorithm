@@ -3,6 +3,7 @@ class MyCircularQueue {
     int size;
     int[][] deque;
     int head,rear;
+    int tail = rear;
 
     public MyCircularQueue(int k) {
         this.capacity = k;
@@ -19,6 +20,7 @@ class MyCircularQueue {
         if(capacity > size && deque[1][rear] == 1){
             deque[0][rear] = value;
             deque[1][rear] = 0;
+            tail = rear;
             size++;
             rear = (rear + 1) % capacity;
             return true;
@@ -38,11 +40,12 @@ class MyCircularQueue {
     }
     
     public int Front() {
-        return deque[0][head];
+        if (size==0) return -1;
+        else return deque[0][head];
     }
     
     public int Rear() {
-        return deque[0][rear];
+        return deque[0][tail];
     }
     
     public boolean isEmpty() {
